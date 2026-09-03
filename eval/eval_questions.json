@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "question": "REPLACE: a question your test PDF can answer",
+    "expected_keywords": ["REPLACE", "keyword"],
+    "expected_source_page": 1
+  },
+  {
+    "id": 2,
+    "question": "REPLACE: another question",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 2
+  },
+  {
+    "id": 3,
+    "question": "REPLACE",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 2
+  },
+  {
+    "id": 4,
+    "question": "REPLACE",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 3
+  },
+  {
+    "id": 5,
+    "question": "REPLACE",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 3
+  },
+  {
+    "id": 6,
+    "question": "REPLACE",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 4
+  },
+  {
+    "id": 7,
+    "question": "REPLACE",
+    "expected_keywords": ["REPLACE"],
+    "expected_source_page": 5
+  },
+  {
+    "id": 8,
+    "question": "REPLACE: include one question the document CANNOT answer, to test if the model correctly says it doesn't know",
+    "expected_keywords": ["don't know", "not mentioned", "no information"],
+    "expected_source_page": null
+  }
+]
