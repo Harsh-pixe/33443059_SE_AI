@@ -1,49 +1,55 @@
 [
   {
     "id": 1,
-    "question": "REPLACE: a question your test PDF can answer",
-    "expected_keywords": ["REPLACE", "keyword"],
+    "question": "What are the three main components of a RAG system?",
+    "expected_keywords": ["document store", "embedding", "language model"],
     "expected_source_page": 1
   },
   {
     "id": 2,
-    "question": "REPLACE: another question",
-    "expected_keywords": ["REPLACE"],
+    "question": "Why are documents split into chunks in a RAG system?",
+    "expected_keywords": ["limited amount", "process"],
     "expected_source_page": 2
   },
   {
     "id": 3,
-    "question": "REPLACE",
-    "expected_keywords": ["REPLACE"],
+    "question": "What is similarity search used for?",
+    "expected_keywords": ["closest", "vector", "meaning"],
     "expected_source_page": 2
   },
   {
     "id": 4,
-    "question": "REPLACE",
-    "expected_keywords": ["REPLACE"],
+    "question": "What is ChromaDB?",
+    "expected_keywords": ["vector database", "local"],
     "expected_source_page": 3
   },
   {
     "id": 5,
-    "question": "REPLACE",
-    "expected_keywords": ["REPLACE"],
+    "question": "What is the trade-off between small and large chunk sizes?",
+    "expected_keywords": ["precise", "context"],
     "expected_source_page": 3
   },
   {
     "id": 6,
-    "question": "REPLACE",
-    "expected_keywords": ["REPLACE"],
+    "question": "Why is Ollama useful for running language models?",
+    "expected_keywords": ["personal computer", "private", "server"],
     "expected_source_page": 4
   },
   {
     "id": 7,
-    "question": "REPLACE",
-    "expected_keywords": ["REPLACE"],
-    "expected_source_page": 5
+    "question": "Why is Phi-3 a practical choice for a local RAG system?",
+    "expected_keywords": ["small", "laptop", "graphics processing unit"],
+    "expected_source_page": 4
   },
   {
     "id": 8,
-    "question": "REPLACE: include one question the document CANNOT answer, to test if the model correctly says it doesn't know",
+    "question": "What does faithfulness measure in a RAG evaluation?",
+    "expected_keywords": ["retrieved context", "invented"],
+    "expected_source_page": 5
+  },
+  {
+    "id": 9,
+    "question": "What is the capital of France?",
     "expected_keywords": ["don't know", "not mentioned", "no information"],
     "expected_source_page": null
   }

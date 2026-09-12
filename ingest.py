@@ -7,7 +7,8 @@ import os
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 
 from config import PERSIST_DIR, COLLECTION_NAME, EMBEDDING_MODEL, CHUNK_SIZE, CHUNK_OVERLAP
 
@@ -43,6 +44,8 @@ def ingest_pdfs(uploaded_files):
         pages = loader.load()
         for page in pages:
             page.metadata["source"] = uploaded_file.name
+            # PyPDFLoader numbers pages starting at 0; shift to human-readable 1-based numbers
+            page.metadata["page"] = page.metadata.get("page", 0) + 1
 
         chunks = splitter.split_documents(pages)
         all_chunks.extend(chunks)

@@ -7,12 +7,6 @@ through the existing retrieval + generation pipeline and measures:
   - Retrieval precision (did the expected source page come back?)
   - Faithfulness (is the answer actually supported by the retrieved context?)
 
-Kept deliberately lightweight (small model, small top_k, small question set)
-so it runs quickly on a laptop with no GPU.
-
-EDIT the constants below to match your existing project's config.py values
-before running.
-
 Usage:
     python eval/evaluate.py
 """
@@ -22,20 +16,20 @@ import csv
 import os
 import sys
 
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.llms import Ollama
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaLLM
 
 sys.path.append(os.path.dirname(__file__))
 from faithfulness import faithfulness_score, flag_hallucination
 
-# ---- EDIT THESE TO MATCH YOUR EXISTING config.py ----
+# ---- Must match config.py ----
 PERSIST_DIR = "chroma_db"
 COLLECTION_NAME = "academic_docs"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-LLM_MODEL = "phi3"          # lightweight local model, swapped from llama3.2
+LLM_MODEL = "phi3"
 TOP_K = 3
-# ------------------------------------------------------
+# --------------------------------
 
 EVAL_SET_PATH = os.path.join(os.path.dirname(__file__), "eval_questions.json")
 RESULTS_PATH = os.path.join(os.path.dirname(__file__), "results.csv")
@@ -85,8 +79,19 @@ def main():
         collection_name=COLLECTION_NAME,
         embedding_function=embeddings,
     )
+
+    try:
+        count = vectordb._collection.count()
+        print(f"Vector store currently contains {count} chunks.")
+        if count == 0:
+            print("WARNING: The vector store is empty. Run the Streamlit app and "
+                  "index data/sample.pdf BEFORE running this script.")
+            return
+    except Exception:
+        pass  # sanity check only; safe to skip if this internal API changes
+
     print(f"Loading local LLM via Ollama: {LLM_MODEL}...")
-    llm = Ollama(model=LLM_MODEL, temperature=0.1)
+    llm = OllamaLLM(model=LLM_MODEL, temperature=0.1)
 
     eval_set = load_eval_set()
     results = []
