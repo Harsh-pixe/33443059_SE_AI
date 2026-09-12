@@ -4,10 +4,6 @@ Tests two chunk sizes against the same evaluation question set, to answer
 the proposal's research question: "How does the quality of document
 chunking affect retrieval?"
 
-Kept to 2 chunk sizes (not more) to keep runtime short on a laptop.
-
-EDIT the constants below before running.
-
 Usage:
     python eval/chunking_experiment.py
 """
@@ -17,19 +13,19 @@ import json
 import csv
 
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.llms import Ollama
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaLLM
 
 sys.path.append(os.path.dirname(__file__))
 from faithfulness import faithfulness_score
 
 # ---- EDIT THESE ----
-SOURCE_PDF = "data/sample.pdf"          # path to one representative test PDF
+SOURCE_PDF = "data/sample.pdf"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "phi3"
-CHUNK_SIZES = [300, 800]                # characters; small vs large chunks
+CHUNK_SIZES = [300, 800]
 CHUNK_OVERLAP = 50
 TOP_K = 3
 # ---------------------
@@ -97,7 +93,7 @@ def run_for_chunk_size(chunk_size, eval_set, embeddings, llm):
 
 def main():
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
-    llm = Ollama(model=LLM_MODEL, temperature=0.1)
+    llm = OllamaLLM(model=LLM_MODEL, temperature=0.1)
     eval_set = load_eval_set()
 
     results = [run_for_chunk_size(size, eval_set, embeddings, llm) for size in CHUNK_SIZES]
