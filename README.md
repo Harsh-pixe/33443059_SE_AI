@@ -53,3 +53,20 @@ python eval/chunking_experiment.py
 - `docs/Evaluation_Methodology.md` — how the system is evaluated
 - `docs/Model_Switch_Note.md` — why Phi-3 was chosen
 - `docs/Daily_Commit_Plan.md` — development schedule
+
+## Results
+
+The system was evaluated against a fixed set of 9 test questions (8 answerable, 1 deliberately unanswerable) using a 5-page test document. Full methodology in `docs/Evaluation_Methodology.md`, full results in `docs/Findings.md`.
+
+| Metric | Value |
+|---|---|
+| Average response time | 2.61s |
+| Retrieval precision | 100% (8/8 answerable questions) |
+| Average keyword accuracy | 0.82 |
+| Average faithfulness score | 0.60 |
+
+**Chunking experiment:** smaller chunks (300 characters) produced more faithful answers (0.67) but lower keyword accuracy (0.54); larger chunks (800 characters) produced higher keyword accuracy (0.78) but lower faithfulness (0.56) — a real accuracy/grounding trade-off, not a single "best" size.
+
+**Limitation found:** manual testing revealed the system does not reliably decline to answer questions outside the scope of the uploaded document, and can supplement retrieved context with outside general knowledge on broad, open-ended prompts. See `docs/Findings.md` and `screenshots/manual_test_hallucination_example.png` for a documented example.
+
+Screenshots of the working application and manual test cases are available in `screenshots/`.
